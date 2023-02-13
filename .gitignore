@@ -11,3 +11,6 @@ Desktop.ini
 # npm
 node_modules
 *.log
+
+# dotenv
+.env
