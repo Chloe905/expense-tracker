@@ -1,1 +1,54 @@
-<h2>Hello world! 這是 index</h2>
+<div class=" container d-flex flex-column align-items-center mt-5 ">
+  {{!-- category dropdown --}}
+  <div class="col-6">
+    <form action="/">
+      <select class="form-select text-center" aria-label="category select" name="category" id="category">
+        <option selected>類別</option>
+        <option value="家居物業">家居物業</option>
+        <option value="交通出行">交通出行</option>
+        <option value="休閒娛樂">休閒娛樂</option>
+        <option value="餐飲食品">餐飲食品</option>
+        <option value="其他">其他</option>
+      </select>
+    </form>
+  </div>
+
+  <div class="col-6 mt-4 row">
+    <h6 class="col-4">總金額:</h6>
+    <h2 class="col-6">{{totalAmount}}</h2>
+  </div>
+
+  <div class="col-8 mt-3">
+    <ul class="list-group">
+      {{#each records}}
+      <li class="list-group-item list-group-item-dark mb-1">
+        <div class="row d-flex align-items-center">
+          <div class="col-2">
+            {{../category.icon}}
+          </div>
+          <div class="col-5 d-flex flex-column">
+            <h5 style="vertical-align: middle;display:inline">{{this.name}}</h5>
+            <div style="font-size: 0.5em;">{{this.date}}</div>
+          </div>
+          <div class="col-2">{{this.amount}}</div>
+          <div class="col-3">
+            <a class="btn rounded-circle border border-1" href="./records/{{this._id}}/edit">
+              <i class="fa-solid fa-pen" style="color:#AD8EBD;"></i>
+            </a>
+            <form action="./records/{{this._id}}?_method=DELETE" method="POST" style="display: inline;">
+              <button class="btn rounded-circle border border-1" type="submit"
+                onclick="return confirm(`確定要刪除${this.name}?`)"><i class="fa-solid fa-trash" style="color:#C96C4B;"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <div class="col-6 mt-3 text-center">
+    <a class="btn btn-sm btn-outline-secondary mb-3 " href="/records/new">+</a>
+  </div>
+
+</div>
