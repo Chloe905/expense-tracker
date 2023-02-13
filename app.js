@@ -2,12 +2,11 @@ const express = require('express')
 const mongoose = require('mongoose') // 載入 mongoose
 const exphbs = require('express-handlebars')
 
-const Record = require('./models/record')
-const Category = require('./models/category')
 // 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+const router = require('./routes')
 const app = express()
 mongoose.set("strictQuery", false)
 mongoose.connect(process.env.MONGODB_URI) // 設定連線到 mongoDB
@@ -23,14 +22,7 @@ db.once('open', () => {
 app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
-// 設定首頁路由
-app.get('/', (req, res) => {
-  Record.find()
-    .lean()
-    .then(records => res.render('index', { records }))
-    .catch(error => console.error(error))
-})
-
+app.use(router)
 // 設定 port 3000
 app.listen(3000, () => {
   console.log('App is running on http://localhost:3000')
