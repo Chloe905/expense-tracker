@@ -1,0 +1,62 @@
+<div class="container mx-4">
+  <div class="row mb-4">
+    <h3 class="bm-1 add-new-title text-center my-3"><span style="font-size:0.5em;display:inline-block;"
+        class="mx-3">*必填欄位</span>請輸入你的支出</h3>
+  </div>
+
+  <div class="row d-flex justify-content-center">
+    <div class="col-6 text-center">
+      <form action="/records" method="POST">
+
+        <div class="mb-3">
+          <div class="row">
+            <label for="name" class="col-md-2 col-form-label">名稱 * : </label>
+            <div class="col-md-8">
+              <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="row">
+            <label for="date" class="col-md-2 col-form-label">日期 * : </label>
+            <div class="col-md-8">
+              <input type="date" id="date" name="date" min="2020-01-01" max="2024-12-31" required>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="row">
+            <label for="category" class="col-md-2 col-form-label">類別 *:</label>
+            <div class="col-md-8">
+              <input list="categorys" type="text" class="form-control" name="category" id="category" required>
+              <datalist id="categorys">
+                <option>家居物業</option>
+                <option>交通出行</option>
+                <option>休閒娛樂</option>
+                <option>餐飲食品</option>
+                <option>其他</option>
+              </datalist>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <div class="row">
+            <label for="amount" class="col-md-2 col-form-label">金額 * : </label>
+            <div class="col-md-8">
+              <input type="number" class="form-control" id="amount" name="amount" required min="0">
+            </div>
+          </div>
+        </div>
+
+        <button class="col-5 btn btn-outline-secondary mt-3" type="submit"><i
+            class="fa-solid fa-circle-plus"></i></button>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="my-5 text-center">
+    <a href="/" class="btn btn-outline-dark rounded-circle"><i class="fa-solid fa-arrow-rotate-left"></i></a>
+  </div>
+</div>

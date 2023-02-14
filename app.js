@@ -22,6 +22,7 @@ db.once('open', () => {
 app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
+app.use(express.urlencoded({ extended: true }))
 app.use(router)
 // 設定 port 3000
 app.listen(3000, () => {
