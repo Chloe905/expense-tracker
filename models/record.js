@@ -10,15 +10,18 @@ const recordSchema = new Schema({
     type: String,
     required: true
   },
+  category: {
+    type: String,
+    required: true
+  },
   amount: {
     type: Number,
     required: true
   },
-  categoryId: {  // 加入關聯設定
+  categoryId: {
     type: Schema.Types.ObjectId,
     ref: 'Category',
-    index: true,
-    required: true
+    index: true
   }
 })
 module.exports = mongoose.model('Record', recordSchema)
