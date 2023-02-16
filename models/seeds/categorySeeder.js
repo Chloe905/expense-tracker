@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
 const Category = require('../category')
+const db = require('../../config/mongoose')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -27,9 +27,6 @@ const SEED_CATEGORY = [
   }
 ]
 
-mongoose.set("strictQuery", false)
-mongoose.connect(process.env.MONGODB_URI)
-const db = mongoose.connection
 
 db.once('open', () => {
   Promise.all(
