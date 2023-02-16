@@ -8,6 +8,8 @@ const Category = require('../../models/category')
 router.get('/', async (req, res) => {
   try {
     let totalAmount = 0
+    const { category } = req.query
+
     const recordList =
       await Record.find()
         .lean()
@@ -15,8 +17,15 @@ router.get('/', async (req, res) => {
     const categoryList =
       await Category.find()
         .lean()
+    let recordfilter = await recordList.filter(data => {
+      return data.category === category
+    })
+    // 沒有輸入分類
+    if (!category) {
+      recordfilter = recordList
+    }
 
-    recordList.forEach((record) => {
+    recordfilter.forEach((record) => {
       // 計算總額
       totalAmount += Number(record.amount)
       // 找出category的icon
@@ -27,11 +36,12 @@ router.get('/', async (req, res) => {
 
     })
 
-    res.render('index', { records: recordList, totalAmount })
+    res.render('index', { records: recordfilter, totalAmount, category })
   }
 
   catch (error) { console.error(error) }
 
 })
+
 
 module.exports = router
