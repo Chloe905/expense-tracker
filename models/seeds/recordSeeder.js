@@ -1,11 +1,17 @@
 const db = require('../../config/mongoose')
+const bcrypt = require('bcryptjs')
 const Record = require('../record') // 載入 record model
-const Category = require('../category')
+const User = require('../user')
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-
+const SEED_USER = {
+  name: '廣志',
+  email: 'root@example.com',
+  password: '12345678'
+}
 const SEED_RECORD = [
   {
     name: '午餐',
@@ -40,18 +46,29 @@ const SEED_RECORD = [
   }
 ]
 db.once('open', () => {
-  Promise.all(
-    SEED_RECORD.map(async (record) => {
-      const { name, date, amount, category } = record
-      await Record.create({
-        name,
-        date,
-        amount,
-        category
-      })
+  bcrypt
+    .genSalt(10)
+    .then(salt => bcrypt.hash(SEED_USER.password, salt))
+    .then(hash => User.create({
+      name: SEED_USER.name,
+      email: SEED_USER.email,
+      password: hash
+    }))
+    .then(user => {
+      const userId = user._id
+      return Promise.all(
+        SEED_RECORD.map(async (record) => {
+          const { name, date, amount, category } = record
+          await Record.create({
+            name,
+            date,
+            amount,
+            category,
+            userId
+          })
+        }))
     })
 
-  )
     .then(() => {
       console.log('create recordSeeds done.')
       process.exit()
