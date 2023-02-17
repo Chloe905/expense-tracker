@@ -7,11 +7,12 @@ const Category = require('../../models/category')
 // 定義首頁路由
 router.get('/', async (req, res) => {
   try {
+    const userId = req.user._id
     let totalAmount = 0
     const { category } = req.query
 
     const recordList =
-      await Record.find()
+      await Record.find({ userId })
         .lean()
         .sort({ date: 'desc' })
     const categoryList =
