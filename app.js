@@ -12,7 +12,7 @@ const router = require('./routes')
 const usePassport = require('./config/passport')
 require('./config/mongoose')
 
-const port = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 const app = express()
 
 
@@ -39,6 +39,6 @@ app.use((req, res, next) => {
 })
 app.use(router)
 // 設定 port 
-app.listen(port, () => {
-  console.log('App is running on http://localhost:3000')
+app.listen(PORT, () => {
+  console.log(`App is running on http://localhost:${PORT}`)
 })
