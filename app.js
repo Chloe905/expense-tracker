@@ -9,6 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const router = require('./routes')
+const usePassport = require('./config/passport')
 require('./config/mongoose')
 const app = express()
 
@@ -23,6 +24,7 @@ app.use(session({
 }))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+usePassport(app)
 app.use(router)
 // 設定 port 3000
 app.listen(3000, () => {
