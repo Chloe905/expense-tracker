@@ -11,6 +11,8 @@ if (process.env.NODE_ENV !== 'production') {
 const router = require('./routes')
 const usePassport = require('./config/passport')
 require('./config/mongoose')
+
+const port = process.env.PORT || 3000
 const app = express()
 
 
@@ -18,7 +20,7 @@ app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs', helper
 app.set('view engine', 'hbs')
 
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -36,7 +38,7 @@ app.use((req, res, next) => {
   next()
 })
 app.use(router)
-// 設定 port 3000
-app.listen(3000, () => {
+// 設定 port 
+app.listen(port, () => {
   console.log('App is running on http://localhost:3000')
 })
