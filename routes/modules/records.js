@@ -27,15 +27,9 @@ router.get('/:id/edit', (req, res) => {
 router.put('/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
-  const { name, date, category, amount } = req.body
-  return Record.findOne({ _id, userId })
-    .then(record => {
-      record.name = name
-      record.date = date
-      record.category = category
-      record.amount = amount
-      return record.save()
-    })
+  Record.findOneAndUpdate({ _id, userId }, req.body, {
+    new: true
+  })
     .then(() => res.redirect(`/`))
     .catch(error => console.log(error))
 })
