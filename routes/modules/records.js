@@ -2,9 +2,15 @@ const express = require('express')
 const router = express.Router()
 
 const Record = require('../../models/record')
+const Category = require('../../models/category')
 
-router.get('/new', (req, res) => {
-  res.render('new')
+router.get('/new', async (req, res) => {
+  await Category.find()
+    .lean()
+    .then(categories => {
+      res.render('new', { categories })
+    })
+
 })
 
 router.post('/', (req, res) => {
@@ -15,12 +21,15 @@ router.post('/', (req, res) => {
     .catch((error) => { console.log(error) })
 })
 
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', async (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
-  return Record.findOne({ _id, userId })
+  const categories = await Category.find()
     .lean()
-    .then((record) => res.render('edit', { record }))
+
+  await Record.findOne({ _id, userId })
+    .lean()
+    .then((record) => res.render('edit', { record, categories }))
     .catch(error => console.log(error))
 })
 
